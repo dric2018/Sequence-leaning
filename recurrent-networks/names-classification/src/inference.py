@@ -59,7 +59,7 @@ if __name__ == '__main__':
 
                 c = classes[pred]
 
-                print(f"[Classifier]>>> {name_line} seems to be a {c} name i think...\n")
+                print(f"[Classifier] >>> {name_line} seems to be a {c} name i think...\n")
         
         except Exception as e:
             print(f"[Error] {e}")
