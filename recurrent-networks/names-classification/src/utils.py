@@ -66,7 +66,7 @@ def letterToTensor(letter):
 # Turn a line into a <max_length x 1 x n_letters> to make sure all tensors have same size
 # or an array of one-hot letter vectors
 def lineToTensor(line):
-    tensor = torch.zeros(max_len, 1, n_letters)
+    tensor = torch.zeros(len(line), 1, n_letters)
     for li, letter in enumerate(line):
         tensor[li][0][letterToIndex(letter)] = 1
     return tensor
@@ -103,4 +103,4 @@ if __name__ == '__main__':
     #print(unicodeToAscii('Ślusàrski'))
     #print(letterToTensor('J'))
     #print(lineToTensor('Jones').size())
-    print(n_letters)
+    #print(n_letters)

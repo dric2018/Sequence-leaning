@@ -37,6 +37,7 @@ class NamesDataset(Dataset):
         name = self.df.iloc[index][0]
 
         data = {
+            'name' : name,
             'x' : lineToTensor(name)
         }
 
@@ -57,13 +58,14 @@ def my_collate(batch):
     """
     from : https://discuss.pytorch.org/t/how-to-create-a-dataloader-with-variable-size-input/8278/2
     """
+    names = [item['name'] for item in batch]
     data = [item['x'] for item in batch]
     target = [item['y'] for item in batch]
 
     # convert lists to tensors
-    data = torch.stack(data)
+    data = torch.cat(data)
     target = torch.LongTensor(target)
-    sample = [data, target]
+    sample = [names, data, target]
 
     return sample
 
@@ -72,6 +74,7 @@ def my_collate(batch):
 if __name__ == '__main__':
     args = parser.parse_args()
     train = pd.read_csv(args.dataset_path)
+    classes = train.target.tolist()
     dataset = NamesDataset(csv_file=train)
 
 
@@ -81,8 +84,10 @@ if __name__ == '__main__':
                             num_workers=os.cpu_count(), collate_fn=my_collate)
 
     for data in dataloader:
-        xs, ys = data[0], data[1]
+        names, xs, ys = data
         print(xs.shape)
         print(ys.shape)
+
+        print(f"name : {names[0]} | class : {classes[ys[0].item()]}")
 
         break
