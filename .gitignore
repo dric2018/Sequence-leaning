@@ -3,3 +3,4 @@ models/
 runs/
 *.csv
 *.zip
+lightning_logs/
